@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.ksp)
 }
 
 android {
@@ -47,6 +48,20 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    android {
+        lint {
+            abortOnError = true // Stops the build if Lint finds errors
+            checkAllWarnings = true // Treat all warnings as issues
+            warningsAsErrors = true // Treat warnings as errors
+            htmlReport = true // Generate an HTML report
+            htmlOutput = file("$buildDir/reports/lint/lint-report.html") // HTML report path
+            xmlReport = true // Generate an XML report
+            xmlOutput = file("$buildDir/reports/lint/lint-report.xml") // XML report path
+        }
+    }
+
+
 }
 
 dependencies {
@@ -66,4 +81,27 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Jetpack Compose
+    implementation(libs.ui)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.material3)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    // Retrofit + OkHttp
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Koin
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 }
