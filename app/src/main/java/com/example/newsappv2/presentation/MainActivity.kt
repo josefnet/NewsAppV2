@@ -7,41 +7,36 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.newsappv2.presentation.ui.screens.NewsListScreen
 import com.example.newsappv2.presentation.ui.theme.NewsAppV2Theme
+import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            NewsAppV2Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+            KoinContext {
+                NewsAppV2Theme {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        NewsListScreen(
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    }
                 }
             }
+
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     NewsAppV2Theme {
-        Greeting("Android")
+        NewsListScreen(modifier = Modifier)
     }
 }
