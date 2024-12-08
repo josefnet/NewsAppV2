@@ -1,8 +1,11 @@
 package com.example.newsappv2.presentation.ui.components
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -32,6 +35,10 @@ fun NewsCard(article: Article) {
             .clip(cardShape)
             .border(1.dp, Color.Gray, cardShape)
             .padding(8.dp)
+            .clickable {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
+                context.startActivity(intent)
+            }
     ) {
         Row(
             modifier = Modifier
