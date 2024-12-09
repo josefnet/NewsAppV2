@@ -1,8 +1,6 @@
 package com.example.newsappv2.presentation.ui.components
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -25,7 +23,7 @@ import com.example.newsappv2.domain.model.Article
 import com.example.newsappv2.R
 
 @Composable
-fun NewsCard(article: Article) {
+fun NewsCard(article: Article,onClick: () -> Unit) {
     val context: Context = LocalContext.current
     val cardShape = RoundedCornerShape(5)
     Column(
@@ -35,10 +33,7 @@ fun NewsCard(article: Article) {
             .clip(cardShape)
             .border(1.dp, Color.Gray, cardShape)
             .padding(8.dp)
-            .clickable {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
-                context.startActivity(intent)
-            }
+            .clickable { onClick() }
     ) {
         Row(
             modifier = Modifier
@@ -110,5 +105,5 @@ fun ArticleCardPreview() {
             publishedAt = "2024-12-08",
             content = "The renewed fighting in Syrias civil war, which has killed more than 300,000 people and sent nearly 6 million refugees out of the country since 2011, will have wide ramifications across the Middle Ea…"
         )
-    )
+    ) {}
 }

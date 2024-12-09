@@ -3,13 +3,14 @@ package com.example.newsappv2.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.newsappv2.presentation.ui.AppNavigation
 import com.example.newsappv2.presentation.ui.screens.NewsListScreen
 import com.example.newsappv2.presentation.ui.theme.NewsAppV2Theme
 import org.koin.compose.KoinContext
@@ -17,12 +18,13 @@ import org.koin.compose.KoinContext
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             KoinContext {
                 NewsAppV2Theme {
+                    val navController = rememberNavController()
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        NewsListScreen(
+                        AppNavigation(
+                            navController = navController,
                             modifier = Modifier.padding(innerPadding)
                         )
                     }
@@ -37,6 +39,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     NewsAppV2Theme {
-        NewsListScreen(modifier = Modifier)
+        NewsListScreen(
+            modifier = Modifier,
+            navController = rememberNavController()
+        )
     }
 }

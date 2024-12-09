@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.newsappv2.R
 import com.example.newsappv2.domain.model.Article
 import com.example.newsappv2.presentation.ui.components.NewsCard
@@ -25,9 +27,10 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun NewsListScreen(
-    viewModel: NewsViewModel = koinViewModel(),
+    navController: NavController,
     modifier: Modifier
 ) {
+    val viewModel: NewsViewModel = koinViewModel()
     val newsState by viewModel.newsState.collectAsState()
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -43,8 +46,10 @@ fun NewsListScreen(
             is Resource.Success -> {
 
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(newsState.data ?: emptyList()) { article ->
-                        NewsCard(article = article)
+                    itemsIndexed(newsState.data ?: emptyList()) { index, article ->
+                        NewsCard(article = article) {
+                            navController.navigate("detailArticle/$index")
+                        }
                     }
                 }
 
@@ -90,7 +95,7 @@ fun NewsListScreenPreview() {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             items(sampleArticles) { article ->
-                NewsCard(article = article)
+                NewsCard(article = article){}
             }
         }
     }
