@@ -112,4 +112,10 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlinx.coroutines.test)
+
+    // MockK for unit testing
+    testImplementation(libs.mockk)
+    testImplementation(libs.mockk.agent.jvm) // Needed for mocking static methods
+
+    testImplementation(libs.slf4j.simple)
 }

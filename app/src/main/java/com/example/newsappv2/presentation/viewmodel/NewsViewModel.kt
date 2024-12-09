@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsappv2.domain.model.Article
 import com.example.newsappv2.domain.usecase.GetTopHeadlinesUseCase
+import com.example.newsappv2.domain.util.CountryCodeProvider
 import com.example.newsappv2.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +24,7 @@ class NewsViewModel(
     private fun fetchNews() {
         viewModelScope.launch {
             _newsState.value = Resource.Loading()
-            getTopHeadlinesUseCase().collect { result ->
+            getTopHeadlinesUseCase(CountryCodeProvider.getDefaultCountryCode()).collect { result ->
                 _newsState.value = Resource.Success(result.data ?: emptyList())
             }
         }
