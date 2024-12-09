@@ -107,4 +107,9 @@ dependencies {
 
     // Coil
     implementation(libs.coil.compose)
+
+    // Mockito
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
